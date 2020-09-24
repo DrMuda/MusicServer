@@ -9,6 +9,13 @@ class Sql {
 	}
 
 	init() {
+		this.connectDB();
+	}
+
+	/**
+	 * 连接数据库
+	 */
+	connectDB() {
 		this.connect = new mssql.ConnectionPool(config);
 
 		// 监听初始化
@@ -63,10 +70,12 @@ class Sql {
 				// 执行并注入参数
 				db.execute(params, (err, result) => {
 					if (err) reject(err);
-					// 返回数据
-					resolve(result);
 					// 释放连接
-					db.unprepare((err) => reject(err));
+					db.unprepare((err) => {
+						if (err) reject(err);
+						// 返回数据
+						resolve(result);
+					});
 				});
 			});
 		});
@@ -115,10 +124,12 @@ class Sql {
 				// 执行并注入参数
 				db.execute(params, (err, result) => {
 					if (err) reject(err);
-					// 返回数据
-					resolve(result);
 					// 释放连接
-					db.unprepare((err) => reject(err));
+					db.unprepare((err) => {
+						if (err) reject(err);
+						// 返回数据
+						resolve(result);
+					});
 				});
 			});
 		});
@@ -141,10 +152,12 @@ class Sql {
 				// 执行并注入参数
 				db.execute(params, (err, result) => {
 					if (err) reject(err);
-					// 返回数据
-					resolve(result);
 					// 释放连接
-					db.unprepare((err) => reject(err));
+					db.unprepare((err) => {
+						if (err) reject(err);
+						// 返回数据
+						resolve(result);
+					});
 				});
 			});
 		});
@@ -201,10 +214,12 @@ class Sql {
 					// 执行并注入参数
 					db.execute(dataObj, (err, result) => {
 						if (err) reject(err);
-						// 返回数据
-						resolve(result);
 						// 释放连接
-						db.unprepare((err) => reject(err));
+						db.unprepare((err) => {
+							if (err) reject(err);
+							// 返回数据
+							resolve(result);
+						});
 					});
 				});
 			});
@@ -270,10 +285,12 @@ class Sql {
 				let params = { ...newDataObj, ...whereObj };
 				db.execute(params, (err, result) => {
 					if (err) reject(err);
-					// 返回数据
-					resolve(result);
 					// 释放连接
-					db.unprepare((err) => reject(err));
+					db.unprepare((err) => {
+						if (err) reject(err);
+						// 返回数据
+						resolve(result);
+					});
 				});
 			});
 		});
@@ -315,10 +332,12 @@ class Sql {
 				// 执行并注入参数
 				db.execute(params, (err, result) => {
 					if (err) reject(err);
-					// 返回数据
-					resolve(result);
 					// 释放连接
-					db.unprepare((err) => reject(err));
+					db.unprepare((err) => {
+						if (err) reject(err);
+						// 返回数据
+						resolve(result);
+					});
 				});
 			});
 		});

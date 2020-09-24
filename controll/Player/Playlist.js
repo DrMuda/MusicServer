@@ -218,6 +218,7 @@ exports.GetPublistPlaylistMusic = async (req, res) => {
 			};
 			return false;
 		});
+		musics.count = musics.res.length;
 		res.errCode.success(musics);
 	} else {
 		res.errCode.find();
@@ -253,7 +254,7 @@ exports.GetPrivatePlaylistMusic = async (req, res) => {
 			};
 			return false;
 		});
-
+		musics.count = musics.res.length;
 		res.errCode.success(musics);
 	} else {
 		res.errCode.find();

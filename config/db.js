@@ -1,13 +1,15 @@
 module.exports = {
-	user: 'sa',
+	user: 'sa', // 数据库用户名
 
-	password: '123456',
+	password: '123456', // 密码
 
-	server: 'localhost',
+	server: 'localhost', // 本地服务器
 
-    database: 'MusicApp',
+    database: 'MusicApp', // 数据库名称
     
-    port: 1434,
+	port: 1434, // SQL Server 端口号
+	
+	retryTimes: 5, // 失败重连次数
 
 	options: {
 		trustedConnection: true,
@@ -16,7 +18,7 @@ module.exports = {
 	},
 
 	pool: {
-		max: 10,
+		max: 1024,
 
 		min: 0,
 
