@@ -165,6 +165,8 @@ exports.GetMusic = async (req, res) => {
 	// 判断该歌曲是否收费
 	let ischarge = music.ischarge === 1;
 
+	console.log(music, ischarge)
+
 	// 免费歌曲，直接发送二进制音频文件
 	if (!ischarge) {
 		let data = await downloadFn(music.song_name);
