@@ -32,7 +32,6 @@ module.exports = async (req, res) => {
 	info = res.delCol(info, [
 		'pwd',
 		'birthday',
-		'listening_song_duration',
 		'isfree',
 		'time',
 	]);
