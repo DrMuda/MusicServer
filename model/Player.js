@@ -308,7 +308,7 @@ const Ownership = async ({ ident, song_id }) => {
 // 删除歌曲
 const DelMusic = async ({ ident, song_id }) => {
 
-	let sql = `
+	let delSql = `
 		delete t1
 		from UserSongStore as t1
 		inner join
@@ -321,19 +321,60 @@ const DelMusic = async ({ ident, song_id }) => {
 		t1.song_id = @song_id
 		and
 		t2.playlist_name = '我喜欢'
-	`
+	`;
+
+	let updateSql = `
+		begin
+		declare @playlist_id varchar(32);
+
+		select @playlist_id=playlist_id from Playlist
+		where
+			playlist_name = '我喜欢'
+		and
+			ident = @ident
+
+		update Playlist
+			set song_count = (
+				select count(id) as music_len from UserSongStore
+				where
+				playlist_id = @playlist_id
+				and
+				ident = @ident
+			)
+		where
+			playlist_id = @playlist_id
+		and
+			ident = @ident
+		end
+	`;
+
 
 	try {
-		let { rowsAffected } = await mssql.query(sql, {
+		let { rowsAffected } = await mssql.query(delSql, {
 			ident,
 			song_id,
 		});
 
+		let state = false;
+
 		if (Array.isArray(rowsAffected)) {
-			return rowsAffected > 0;
+			state = !rowsAffected.includes(0);
 		} else {
-			return false;
+			state = false;
 		}
+
+		let res = await mssql.query(updateSql, {
+			ident
+		});
+
+		if (Array.isArray(res.rowsAffected)) {
+			state = !res.rowsAffected.includes(0);
+		} else {
+			state = false;
+		}
+
+		return state;
+
 	} catch (error) {
 		console.log(error);
 		return false;

@@ -10,7 +10,7 @@ router.post('/Login', require('../User/Login'));
 // 用户注册
 router.post('/Register', require('../User/Register'));
 // 检测用户是否存在
-router.get('/Exist', require('../User/Exist'));
+router.get('/Exist',tokenAuth, require('../User/Exist'));
 // 获取用户密保问题
 router.get('/security', tokenAuth, require('../User/Info').GetSecurity);
 // 获取用户密保问题（公开接口）
