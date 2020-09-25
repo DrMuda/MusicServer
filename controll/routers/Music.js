@@ -15,7 +15,10 @@ router.get(
 	require('../Player/Music').GetPurchased
 );
 router.get('/singer', require('../Player/Music').GetSinger);
-router.post('/del', require('../Player/Music').DelMusic);
+router.post('/del',
+	tokenAuth,
+	validToken,
+	require('../Player/Music').DelMusic);
 router.get('/search', require('../Player/Music').SearchMusic);
 router.get('/lyric', require('../Player/Music').GetLyric);
 router.get('/ranklist', require('../Player/Music').GetRanklist);

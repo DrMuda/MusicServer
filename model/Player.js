@@ -294,7 +294,6 @@ const Ownership = async ({ ident, song_id }) => {
 
 	try {
 		let { recordset } = await mssql.query(sql);
-		console.log("=======>", recordset)
 		if (Array.isArray(recordset) && recordset.length === 1) {
 			return recordset.exist > 0;
 		} else {
@@ -307,16 +306,31 @@ const Ownership = async ({ ident, song_id }) => {
 };
 
 // 删除歌曲
-const DelMusic = async ({ ident, playlist_id, song_id }) => {
-	let where = `where ident=@ident and playlist_id=@playlist_id and song_id=@song_id`;
+const DelMusic = async ({ ident, song_id }) => {
+
+	let sql = `
+		delete t1
+		from UserSongStore as t1
+		inner join
+		Playlist as t2
+		on
+		t1.playlist_id = t2.playlist_id
+		and
+		t1.ident = @ident
+		and
+		t1.song_id = @song_id
+		and
+		t2.playlist_name = '我喜欢'
+	`
+
 	try {
-		let res = await mssql.del('UserSongStore', where, {
+		let { rowsAffected } = await mssql.query(sql, {
 			ident,
-			playlist_id,
 			song_id,
 		});
-		if (res) {
-			return true;
+
+		if (Array.isArray(rowsAffected)) {
+			return rowsAffected > 0;
 		} else {
 			return false;
 		}
@@ -680,7 +694,7 @@ const AddReport = async ({ ident, song_id, report_content, time }) => {
 };
 
 // 获取公开歌单
-const GetPublistPlaylist = async ({
+const GetPublicPlaylist = async ({
 	search_type,
 	page_index = 0,
 	page_size = 20,
@@ -742,7 +756,7 @@ const GetPrivatePlaylist = async ({ ident }) => {
 };
 
 // 获取公开歌单歌曲
-const GetPublistPlaylistMusic = async ({ playlist_id }) => {
+const GetPublicPlaylistMusic = async ({ playlist_id }) => {
 	let sql = `
         select 
         Song.song_id,
@@ -1141,9 +1155,9 @@ module.exports = {
 	LikeComment,
 	AddReply,
 	AddReport,
-	GetPublistPlaylist,
+	GetPublicPlaylist,
 	GetPrivatePlaylist,
-	GetPublistPlaylistMusic,
+	GetPublicPlaylistMusic,
 	GetPrivatePlaylistMusic,
 	GetLikeMusics,
 	CreatePlaylist,

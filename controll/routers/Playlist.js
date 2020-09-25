@@ -6,15 +6,15 @@ const router = require('express').Router();
 const Token = require('../../libs/Token');
 
 // 歌曲歌单相关路由
-router.get('/publist', require('../Player/Playlist').GetPublistPlaylist);
+router.get('/public', require('../Player/Playlist').GetPublicPlaylist);
 router.get(
 	'/private',
 	tokenAuth,
 	require('../Player/Playlist').GetPrivatePlaylist
 );
 router.get(
-	'/publist/music',
-	require('../Player/Playlist').GetPublistPlaylistMusic
+	'/public/music',
+	require('../Player/Playlist').GetPublicPlaylistMusic
 );
 router.get(
 	'/private/music',
@@ -28,7 +28,7 @@ router.post('/del', tokenAuth, require('../Player/Playlist').DelPlaylist);
 router.post('/edit', tokenAuth, require('../Player/Playlist').EditPlaylist);
 router.post('/save', tokenAuth, require('../Player/Playlist').SavePlaylist);
 // 获取分享的歌曲或歌单
-router.get('/publist/getShareMusicList', require('../Player/Share'));
+router.get('/public/getShareMusicList', require('../Player/Share'));
 
 // token中间件
 function tokenAuth(req, res, next) {

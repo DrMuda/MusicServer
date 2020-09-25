@@ -5,8 +5,8 @@
 const {
 	CreatePlaylist,
 	MusicToPlaylist,
-	GetPublistPlaylist,
-	GetPublistPlaylistMusic,
+	GetPublicPlaylist,
+	GetPublicPlaylistMusic,
 	GetPrivatePlaylist,
 	GetPrivatePlaylistMusic,
 	GetLikeMusics,
@@ -143,9 +143,9 @@ exports.SavePlaylist = async (req, res) => {
 /*
  * 获取公开歌单
  */
-exports.GetPublistPlaylist = async (req, res) => {
+exports.GetPublicPlaylist = async (req, res) => {
 	let { search_type, page_index, page_size } = req.query;
-	let result = await GetPublistPlaylist({
+	let result = await GetPublicPlaylist({
 		search_type,
 		page_index,
 		page_size,
@@ -203,9 +203,9 @@ exports.GetPrivatePlaylist = async (req, res) => {
 /*
  * 获取公开歌单歌曲
  */
-exports.GetPublistPlaylistMusic = async (req, res) => {
+exports.GetPublicPlaylistMusic = async (req, res) => {
 	let { playlist_id } = req.query;
-	let musics = await GetPublistPlaylistMusic({ playlist_id });
+	let musics = await GetPublicPlaylistMusic({ playlist_id });
 
 	if (musics) {
 		let ids = [];

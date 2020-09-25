@@ -12,6 +12,7 @@ const {
 	GetMusic,
 	GetPurchased,
 	GetSinger,
+	DelMusic,
 	Ownership,
 	SearchMusic,
 	GetRankingList,
@@ -165,8 +166,6 @@ exports.GetMusic = async (req, res) => {
 	// 判断该歌曲是否收费
 	let ischarge = music.ischarge === 1;
 
-	console.log(music, ischarge)
-
 	// 免费歌曲，直接发送二进制音频文件
 	if (!ischarge) {
 		let data = await downloadFn(music.song_name);
@@ -244,7 +243,21 @@ exports.GetSinger = async (req, res) => {
 /**
  * 删除歌曲
  */
-exports.DelMusic = (req, res) => {};
+exports.DelMusic = async (req, res) => {
+	let ident = req.ident;
+
+	let { id: song_id } = req.body;
+
+	if (!song_id) return res.errCode.req();
+
+	let result = await DelMusic({ ident, song_id });
+
+	if (result) {
+		res.errCode.success();
+	} else {
+		res.errCode.refuse();
+	}
+};
 
 /**
  * 获取歌词
