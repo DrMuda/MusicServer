@@ -157,7 +157,6 @@ exports.GetMusic = async (req, res) => {
 	valid = Number(valid);
 
 	if (typeof valid !== 'number' || ![0, 1].includes(valid)) {
-		console.log(song_id, valid);
 		return res.errCode.req();
 	}
 
@@ -179,7 +178,6 @@ exports.GetMusic = async (req, res) => {
 
 	// 已登录，查询用户是否已购买过该歌曲
 	let state = await Ownership({ ident, song_id });
-	console.log(ident, song_id)
 	if (!state) {
 		// 未曾购买，拒绝请求
 		return res.errCode.req();

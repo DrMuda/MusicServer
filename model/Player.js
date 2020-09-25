@@ -294,7 +294,6 @@ const Ownership = async ({ ident, song_id }) => {
 
 	try {
 		let { recordset } = await mssql.query(sql);
-		console.log(recordset)
 		if (Array.isArray(recordset) && recordset.length === 1) {
 			return recordset[0].exist > 0;
 		} else {
