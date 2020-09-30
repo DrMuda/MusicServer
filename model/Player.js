@@ -1065,12 +1065,14 @@ const SavePlaylist = async ({
 	// 删除最后一个逗号
 	insertSQL = insertSQL.slice(0, insertSQL.length - 1);
 
-	// 更新歌曲数量
+	// 更新歌曲数量和歌单封面
 	let = updateSQL = `
 			update Playlist
-			set song_count = song_count + ${playlist.length}
+			set
+				song_count = song_count + ${playlist.length},
+				cover = (select cover from song where song_id='${playlist[playlist.length-1]}')
 			where
-			playlist_id = @playlist_id
+				playlist_id = @playlist_id
 		`;
 	// 执行歌曲插入
 	try {

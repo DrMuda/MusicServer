@@ -316,7 +316,7 @@ exports.GetRanklist = async (req, res) => {
 };
 
 /**
- * 排行榜
+ * 分类
  */
 exports.ClassifiedSearch = async (req, res) => {
 	let {

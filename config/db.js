@@ -7,7 +7,7 @@ module.exports = {
 
     database: 'MusicApp', // 数据库名称
     
-	port: 1434, // SQL Server 端口号
+	port: 50898, // SQL Server 端口号
 	
 	retryTimes: 5, // 失败重连次数
 
@@ -25,3 +25,9 @@ module.exports = {
 		idleTimeoutMillis: 30000,
 	},
 };
+
+
+/**
+ * 查询数据库端口的方法
+ * exec sys.sp_readerrorlog 0, 1, 'listening'
+ */
